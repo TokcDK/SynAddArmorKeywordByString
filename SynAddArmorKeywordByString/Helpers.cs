@@ -32,7 +32,12 @@ namespace SynAddArmorKeywordByString
                 if (template==null) continue;
                 if (template.Keyword==null) continue;
                 if (template.Keyword.FormKey.IsNull) continue;
-                if (!edid.HasAnyFromList(template!.StringsToSearch!)) continue;
+
+                if (template.StringsSearchMethod == SearchMethod.AND)
+                {
+                    if (!edid.HasAllFromList(template!.StringsToSearch!)) continue;
+                }
+                else if (!edid.HasAnyFromList(template!.StringsToSearch!)) continue;
 
                 yield return template;
             }

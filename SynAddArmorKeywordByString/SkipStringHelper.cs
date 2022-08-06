@@ -75,6 +75,23 @@ namespace StringCompareSettings
 
             return false;
         }
+        public static bool HasAllFromList(this string? inputString, IEnumerable<StringCompareSetting> list)
+        {
+            //if (IsUsingList) return false;
+            if (string.IsNullOrWhiteSpace(inputString)) return false;
+
+            int count = list.Count();
+            foreach (var setting in list)
+            {
+                if(setting != null && !IsFound(inputString, setting)) return false;
+
+                count--;
+            }
+
+            if (count == 0) return true;
+
+            return false;
+        }
 
         private static bool IsFound(string inputString, StringCompareSetting stringData)
         {
