@@ -41,7 +41,7 @@ namespace StringCompareSettings
     {
         //public static bool IsUsingList = false;
 
-        public static bool IsInList(this string? inputString, IEnumerable<StringCompareSettingContainer> list)
+        public static bool HasAnyFromList(this string? inputString, IEnumerable<StringCompareSettingContainer> list)
         {
             //if (IsUsingList) return false;
             if (string.IsNullOrWhiteSpace(inputString)) return false;
@@ -58,7 +58,7 @@ namespace StringCompareSettings
 
             return false;
         }
-        public static bool IsInList(this string? inputString, IEnumerable<StringCompareSetting> list)
+        public static bool HasAnyFromList(this string? inputString, IEnumerable<StringCompareSetting> list)
         {
             //if (IsUsingList) return false;
             if (string.IsNullOrWhiteSpace(inputString)) return false;

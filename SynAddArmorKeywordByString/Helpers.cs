@@ -16,7 +16,7 @@ namespace SynAddArmorKeywordByString
                 if (template==null) continue;
                 if (template.Keyword==null) continue;
                 if (template.Keyword.FormKey.IsNull) continue;
-                if (!edid.IsInList(template!.StringsToSearch!)) continue;
+                if (!edid.HasAnyFromList(template!.StringsToSearch!)) continue;
 
                 keywordData = template;
                 return true;
