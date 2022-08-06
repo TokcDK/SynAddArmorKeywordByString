@@ -25,5 +25,17 @@ namespace SynAddArmorKeywordByString
             keywordData = null;
             return false;
         }
+        public static IEnumerable<KeywordData?> GetAllValues(this string edid, HashSet<KeywordData> listOfTemplates)
+        {
+            foreach(var template in listOfTemplates)
+            {
+                if (template==null) continue;
+                if (template.Keyword==null) continue;
+                if (template.Keyword.FormKey.IsNull) continue;
+                if (!edid.HasAnyFromList(template!.StringsToSearch!)) continue;
+
+                yield return template;
+            }
+        }
     }
 }

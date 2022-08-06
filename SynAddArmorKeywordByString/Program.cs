@@ -39,13 +39,19 @@ namespace SynAddArmorKeywordByString
                 //if (armorGetter.MajorFlags.HasFlag(Armor.MajorFlag.Shield)) continue;
                 //if (armorGetter.BodyTemplate == null) continue;
                 //if (armorGetter.BodyTemplate.Flags.HasFlag(BodyTemplate.Flag.NonPlayable)) continue;
-                if (!armorGetter.EditorID.TryGetValue(listOfTemplates, out var keywordData) || keywordData==null) continue;
-                if (armorGetter.Keywords.Contains(keywordData.Keyword)) continue;
+                foreach(var keywordData in armorGetter.EditorID.GetAllValues(listOfTemplates))
+                {
+                    if (keywordData==null) continue;
+                    if (armorGetter.Keywords.Contains(keywordData.Keyword)) continue;
 
-                Console.WriteLine($"Add keyword {keywordData.Keyword!.FormKey} for {armorGetter.EditorID}|{armorGetter.FormKey}");
-                var armorEdit = state.PatchMod.Armors.GetOrAddAsOverride(armorGetter);
-                //if (armorEdit.Keywords == null) armorEdit.Keywords = new Noggog.ExtendedList<Mutagen.Bethesda.Plugins.IFormLinkGetter<IKeywordGetter>>();
-                armorEdit.Keywords!.Add(keywordData.Keyword!);
+                    Console.WriteLine($"Add keyword {keywordData.Keyword!.FormKey} for {armorGetter.EditorID}|{armorGetter.FormKey}");
+                    var armorEdit = state.PatchMod.Armors.GetOrAddAsOverride(armorGetter);
+                    //if (armorEdit.Keywords == null) armorEdit.Keywords = new Noggog.ExtendedList<Mutagen.Bethesda.Plugins.IFormLinkGetter<IKeywordGetter>>();
+                    armorEdit.Keywords!.Add(keywordData.Keyword!);
+                }
+
+                //if (!armorGetter.EditorID.TryGetValue(listOfTemplates, out var keywordData) || keywordData==null) continue;
+
             }
         }
     }
