@@ -15,14 +15,14 @@ namespace SynAddArmorKeywordByString
         [SynthesisOrder]
         [SynthesisDiskName("StringsToSearch")]
         [SynthesisTooltip("Strings for keyword")]
-        public HashSet<StringCompareSetting>? StringsToSearch;
+        public HashSet<StringCompareSetting> StringsToSearch = new();
     }
 
     public class PatcherSettings
     {
         [SynthesisOrder]
         [SynthesisDiskName("AddKeywordTemplate")]
-        [SynthesisSettingName("Keyword Template")]
+        [SynthesisSettingName("Keyword Templates")]
         [SynthesisTooltip("Strings to search and keyword to set if found")]
         // public string BaselineMod { get; set; } = "MyFacegenBaseline.esp";
         public HashSet<KeywordData> AddKeywordTemplate = new();

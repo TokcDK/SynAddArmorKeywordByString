@@ -39,112 +39,138 @@ namespace StringCompareSettings
 
     public static class StringCompareHelpers
     {
-        public static bool IsUsingSkipList = false;
+        //public static bool IsUsingList = false;
 
-        public static bool IsInSkipList(this string? inputString, HashSet<StringCompareSettingContainer> list)
+        public static bool IsInList(this string? inputString, IEnumerable<StringCompareSettingContainer> list)
         {
-            if (IsUsingSkipList) return false;
+            //if (IsUsingList) return false;
             if (string.IsNullOrWhiteSpace(inputString)) return false;
 
             foreach (var setting in list)
             {
-                if (setting.StringSetting==null) continue;
+                if (setting.StringSetting == null) continue;
 
-                var s = setting.StringSetting;
-                if (string.IsNullOrWhiteSpace(s.Name)) continue;
-
-                if (s.Compare == CompareType.Contains)
+                if (IsFound(inputString, setting.StringSetting))
                 {
-                    if (s.IgnoreCase)
-                    {
-                        if (inputString.Contains(s.Name, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (inputString.Contains(s.Name, StringComparison.InvariantCulture))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                else if (s.Compare == CompareType.Equals)
-                {
-                    if (s.IgnoreCase)
-                    {
-                        if (string.Equals(inputString, s.Name, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (string.Equals(inputString, s.Name, StringComparison.InvariantCulture))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                else if (s.Compare == CompareType.StartsWith)
-                {
-                    if (s.IgnoreCase)
-                    {
-                        if (inputString.StartsWith(s.Name, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (inputString.StartsWith(s.Name, StringComparison.InvariantCulture))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                else if (s.Compare == CompareType.EndsWith)
-                {
-                    if (s.IgnoreCase)
-                    {
-                        if (inputString.EndsWith(s.Name, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (inputString.EndsWith(s.Name, StringComparison.InvariantCulture))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                else if (s.Compare == CompareType.Regex)
-                {
-                    try
-                    {
-                        if (s.IgnoreCase)
-                        {
-                            if (Regex.IsMatch(inputString, s.Name, RegexOptions.IgnoreCase))
-                            {
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            if (Regex.IsMatch(inputString, s.Name, RegexOptions.None))
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    catch { }
+                    return true;
                 }
             }
 
-            return true;
+            return false;
+        }
+        public static bool IsInList(this string? inputString, IEnumerable<StringCompareSetting> list)
+        {
+            //if (IsUsingList) return false;
+            if (string.IsNullOrWhiteSpace(inputString)) return false;
+
+            foreach (var setting in list)
+            {
+                if (setting==null) continue;
+
+                if(IsFound(inputString, setting))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsFound(string inputString, StringCompareSetting stringData)
+        {
+            if (string.IsNullOrWhiteSpace(stringData.Name)) return false;
+
+            if (stringData.Compare == CompareType.Contains)
+            {
+                if (stringData.IgnoreCase)
+                {
+                    if (inputString.Contains(stringData.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (inputString.Contains(stringData.Name, StringComparison.InvariantCulture))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (stringData.Compare == CompareType.Equals)
+            {
+                if (stringData.IgnoreCase)
+                {
+                    if (string.Equals(inputString, stringData.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (string.Equals(inputString, stringData.Name, StringComparison.InvariantCulture))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (stringData.Compare == CompareType.StartsWith)
+            {
+                if (stringData.IgnoreCase)
+                {
+                    if (inputString.StartsWith(stringData.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (inputString.StartsWith(stringData.Name, StringComparison.InvariantCulture))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (stringData.Compare == CompareType.EndsWith)
+            {
+                if (stringData.IgnoreCase)
+                {
+                    if (inputString.EndsWith(stringData.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (inputString.EndsWith(stringData.Name, StringComparison.InvariantCulture))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (stringData.Compare == CompareType.Regex)
+            {
+                try
+                {
+                    if (stringData.IgnoreCase)
+                    {
+                        if (Regex.IsMatch(inputString, stringData.Name, RegexOptions.IgnoreCase))
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        if (Regex.IsMatch(inputString, stringData.Name, RegexOptions.None))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            return false;
         }
     }
 }
