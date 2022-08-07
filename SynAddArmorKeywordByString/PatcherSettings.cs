@@ -26,6 +26,10 @@ namespace SynAddArmorKeywordByString
         [SynthesisDiskName("StringsToSearch")]
         [SynthesisTooltip("Strings serach method. OR=any, AND=all")]
         public SearchMethod StringsSearchMethod = SearchMethod.OR;
+        [SynthesisOrder]
+        [SynthesisDiskName("StringsBlacklist")]
+        [SynthesisTooltip("Strings which must be missing even if found any string.")]
+        public HashSet<StringCompareSetting> StringsBlacklist = new();
     }
 
     public class PatcherSettings

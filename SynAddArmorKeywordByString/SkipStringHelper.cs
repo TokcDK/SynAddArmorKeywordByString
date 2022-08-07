@@ -41,49 +41,66 @@ namespace StringCompareSettings
     {
         //public static bool IsUsingList = false;
 
-        public static bool HasAnyFromList(this string? inputString, IEnumerable<StringCompareSettingContainer> list)
+        public static bool HasAnyFromList(this string? inputString, IEnumerable<StringCompareSettingContainer> list, IEnumerable<StringCompareSettingContainer> blackList)
         {
             //if (IsUsingList) return false;
             if (string.IsNullOrWhiteSpace(inputString)) return false;
+
+            foreach (var setting in blackList)
+            {
+                if (setting.StringSetting == null) continue;
+
+                if (IsFound(inputString, setting.StringSetting)) return false;
+            }
 
             foreach (var setting in list)
             {
                 if (setting.StringSetting == null) continue;
 
-                if (IsFound(inputString, setting.StringSetting))
-                {
-                    return true;
-                }
+                if (IsFound(inputString, setting.StringSetting)) return true;
             }
 
             return false;
         }
-        public static bool HasAnyFromList(this string? inputString, IEnumerable<StringCompareSetting> list)
+        public static bool HasAnyFromList(this string? inputString, IEnumerable<StringCompareSetting> list, IEnumerable<StringCompareSetting> blackList)
         {
             //if (IsUsingList) return false;
             if (string.IsNullOrWhiteSpace(inputString)) return false;
+
+            foreach (var setting in blackList)
+            {
+                if (setting == null) continue;
+
+                if (IsFound(inputString, setting)) return false;
+            }
 
             foreach (var setting in list)
             {
                 if (setting==null) continue;
 
-                if(IsFound(inputString, setting))
-                {
-                    return true;
-                }
+                if(IsFound(inputString, setting)) return true;
             }
 
             return false;
         }
-        public static bool HasAllFromList(this string? inputString, IEnumerable<StringCompareSetting> list)
+        public static bool HasAllFromList(this string? inputString, IEnumerable<StringCompareSetting> list, IEnumerable<StringCompareSetting> blackList)
         {
             //if (IsUsingList) return false;
             if (string.IsNullOrWhiteSpace(inputString)) return false;
 
+            foreach (var setting in blackList)
+            {
+                if (setting == null) continue;
+
+                if (IsFound(inputString, setting)) return false;
+            }
+
             int count = list.Count();
             foreach (var setting in list)
             {
-                if(setting != null && !IsFound(inputString, setting)) return false;
+                bool useBlacklist = false;
+
+                if (setting != null && !IsFound(inputString, setting)) return false;
 
                 count--;
             }

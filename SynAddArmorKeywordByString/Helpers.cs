@@ -9,22 +9,6 @@ namespace SynAddArmorKeywordByString
 {
     internal static class Helpers
     {
-        public static bool TryGetValue(this string edid, HashSet<KeywordData> listOfTemplates, out KeywordData? keywordData)
-        {
-            foreach(var template in listOfTemplates)
-            {
-                if (template==null) continue;
-                if (template.Keyword==null) continue;
-                if (template.Keyword.FormKey.IsNull) continue;
-                if (!edid.HasAnyFromList(template!.StringsToSearch!)) continue;
-
-                keywordData = template;
-                return true;
-            }
-
-            keywordData = null;
-            return false;
-        }
         public static IEnumerable<KeywordData?> GetAllValues(this string edid, HashSet<KeywordData> listOfTemplates)
         {
             foreach(var template in listOfTemplates)
@@ -35,9 +19,9 @@ namespace SynAddArmorKeywordByString
 
                 if (template.StringsSearchMethod == SearchMethod.AND)
                 {
-                    if (!edid.HasAllFromList(template!.StringsToSearch!)) continue;
+                    if (!edid.HasAllFromList(template!.StringsToSearch!, template.StringsBlacklist)) continue;
                 }
-                else if (!edid.HasAnyFromList(template!.StringsToSearch!)) continue;
+                else if (!edid.HasAnyFromList(template!.StringsToSearch!, template.StringsBlacklist)) continue;
 
                 yield return template;
             }
