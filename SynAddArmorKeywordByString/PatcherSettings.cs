@@ -20,15 +20,15 @@ namespace SynAddArmorKeywordByString
         [SynthesisOrder]
         [SynthesisDiskName("StringsToSearch")]
         [SynthesisTooltip("Strings for keyword")]
-        public List<StringCompareSetting> StringsToSearch = new();
+        public HashSet<StringCompareSetting> StringsToSearch = new();
         [SynthesisOrder]
-        [SynthesisDiskName("StringsToSearch")]
+        [SynthesisDiskName("SearchMethod")]
         [SynthesisTooltip("Strings serach method. OR=any, AND=all")]
         public SearchMethod StringsSearchMethod = SearchMethod.OR;
         [SynthesisOrder]
         [SynthesisDiskName("StringsBlacklist")]
         [SynthesisTooltip("Strings which must be missing even if found any string.")]
-        public List<StringCompareSetting> StringsBlacklist = new();
+        public HashSet<StringCompareSetting> StringsBlacklist = new();
     }
 
     public class PatcherSettings
@@ -38,6 +38,6 @@ namespace SynAddArmorKeywordByString
         [SynthesisSettingName("Keyword Templates")]
         [SynthesisTooltip("Strings to search and keyword to set if found")]
         // public string BaselineMod { get; set; } = "MyFacegenBaseline.esp";
-        public List<KeywordData> AddKeywordTemplate = new();
+        public HashSet<KeywordData> AddKeywordTemplate = new();
     }
 }
