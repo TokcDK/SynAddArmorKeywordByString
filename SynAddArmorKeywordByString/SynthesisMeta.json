@@ -1,8 +1,8 @@
 {
   "Nickname": "SynAddArmorKeywordByString",
   "Visibility": "Visible",
-  "OneLineDescription": "Add selected keyword if some string found in editor id",
-  "LongDescription": "Add selected keyword if some string found in editor id",
+  "OneLineDescription": "Add selected keyword by string",
+  "LongDescription": "Add selected keyword if some string found in editor id\r\nexample: we can add waf_visualdark armor keyword by 'black' string in edid of armors",
   "PreferredAutoVersioning": "Default",
   "RequiredMods": [],
   "TargetedReleases": []
